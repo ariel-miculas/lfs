@@ -2131,6 +2131,14 @@ EOF
 ```
 
 ## Grub
+
+The first one (`set root=...`) tells GRUB where to look for grub.cfg, the second one tells GRUB where (and how) to look for the root file system for the specific OS you're loading.
+
+Note:
+* `/dev/sda1` - `(hd0,1)`: boot partition
+* `/dev/sda2` - `(hd0,2)`: swap partition
+* `/dev/sda3` - `(hd0,3)`: root partition
+
 ```
 grub-install /dev/loop0
 cat > /boot/grub/grub.cfg << "EOF"
