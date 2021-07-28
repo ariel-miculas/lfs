@@ -2145,5 +2145,23 @@ menuentry "GNU/Linux, Linux 5.10.17-lfs-10.1" {
 EOF
 ```
 
+# Versioning
+```
+echo 10.1 > /etc/lfs-release
+cat > /etc/lsb-release << "EOF"
+DISTRIB_ID="Linux From Scratch"
+DISTRIB_RELEASE="10.1"
+DISTRIB_CODENAME="ariel-lfs"
+DISTRIB_DESCRIPTION="Linux From Scratch"
+EOF
+cat > /etc/os-release << "EOF"
+NAME="Linux From Scratch"
+VERSION="10.1"
+ID=lfs
+PRETTY_NAME="Linux From Scratch 10.1"
+VERSION_CODENAME="ariel-lfs"
+EOF
+```
+
 # Resources
 https://nilisnotnull.blogspot.com/2015/02/installing-lfs-with-qemu.html?m=0
