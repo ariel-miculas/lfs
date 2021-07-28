@@ -1190,6 +1190,11 @@ grpconv
 sed -i 's/yes/no/' /etc/default/useradd
 ```
 
+### Setting the root password
+```
+passwd root
+```
+
 ## gcc
 ```
 case $(uname -m) in
@@ -2074,6 +2079,69 @@ cat > /etc/shells << "EOF"
 /bin/sh
 /bin/bash
 # End /etc/shells
+EOF
+```
+
+# Making the LFS system bootable
+## Fstab
+```
+cat > /etc/fstab << "EOF"
+# Begin /etc/fstab
+
+# file system  mount-point  type     options             dump  fsck
+#                                                              order
+/dev/sda3      /            ext4     defaults            1     1
+/dev/sda1      /boot        ext4     defaults            0     0
+/dev/sda2      swap         swap     pri=1               0     0
+proc           /proc        proc     nosuid,noexec,nodev 0     0
+sysfs          /sys         sysfs    nosuid,noexec,nodev 0     0
+devpts         /dev/pts     devpts   gid=5,mode=620      0     0
+tmpfs          /run         tmpfs    defaults            0     0
+devtmpfs       /dev         devtmpfs mode=0755,nosuid    0     0
+
+# End /etc/fstab
+EOF
+```
+
+## Kernel
+```
+make mrproper
+make defconfig
+make -j8
+make modules_install
+cp arch/x86_64/boot/bzImage /boot/vmlinuz-5.10.17-lfs-10.1
+cp -iv System.map /boot/System.map-5.10.17
+cp -iv .config /boot/config-5.10.17
+install -d /usr/share/doc/linux-5.10.17
+cp -r Documentation/* /usr/share/doc/linux-5.10.17
+chown -R 0:0 /sources/linux-5.10.17
+```
+
+## Kernel modules load order
+```
+install -v -m755 -d /etc/modprobe.d
+cat > /etc/modprobe.d/usb.conf << "EOF"
+# Begin /etc/modprobe.d/usb.conf
+
+install ohci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i ohci_hcd ; true
+install uhci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i uhci_hcd ; true
+
+# End /etc/modprobe.d/usb.conf
+EOF
+```
+
+## Grub
+```
+grub-install /dev/loop0
+cat > /boot/grub/grub.cfg << "EOF"
+# Begin /boot/grub/grub.cfg
+set default=0
+set timeout=5
+insmod ext2
+set root=(hd0,1)
+menuentry "GNU/Linux, Linux 5.10.17-lfs-10.1" {
+    linux /vmlinuz-5.10.17-lfs-10.1 root=/dev/sda3 ro
+}
 EOF
 ```
 
