@@ -1938,9 +1938,9 @@ cat /etc/udev/rules.d/70-persistent-net.rules
 ## Network configuration
 ```
 cd /etc/sysconfig/
-cat > ifconfig.enp4s0f1 << "EOF"
+cat > ifconfig.enp0s3 << "EOF"
 ONBOOT=yes
-IFACE=enp4s0f1
+IFACE=enp0s3
 SERVICE=ipv4-static
 IP=192.168.1.2
 GATEWAY=192.168.1.1
