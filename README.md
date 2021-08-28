@@ -2083,16 +2083,21 @@ cat /etc/udev/rules.d/70-persistent-net.rules
 ```
 
 ## Network configuration
+
+qemu's user mode networking has the default network at `10.0.2.0/24`, the default gateway at `10.0.2.2` and the first DHCP address allocated is `10.0.2.15`.
+
+See https://en.wikibooks.org/wiki/QEMU/Networking and https://wiki.qemu.org/Documentation/Networking#User_Networking_.28SLIRP.29 for more details.
+
 ```
 cd /etc/sysconfig/
 cat > ifconfig.enp0s3 << "EOF"
 ONBOOT=yes
 IFACE=enp0s3
 SERVICE=ipv4-static
-IP=192.168.1.2
-GATEWAY=192.168.1.1
+IP=10.0.2.15
+GATEWAY=10.0.2.2
 PREFIX=24
-BROADCAST=192.168.1.255
+BROADCAST=10.0.2.255
 EOF
 ```
 
