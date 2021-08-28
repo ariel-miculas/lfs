@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ -z "$LFS" ]; then
-	export LFS=/dev/lfs
+	export LFS=/mnt/lfs
 fi
 
 mkdir -pv $LFS
