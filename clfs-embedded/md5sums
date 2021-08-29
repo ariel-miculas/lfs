@@ -1,0 +1,10 @@
+2869c9bf3e60ee97c74ac2a6bf4e9d68 binutils-2.27.tar.bz2
+2eaae519cac1143bcf583636a745381f busybox-1.24.2.tar.bz2
+9768625159663b300ae4de2f4745fcc4 gcc-6.2.0.tar.bz2
+4c175f86e11eb32d8bf9872ca3a8e11d gmp-6.1.1.tar.bz2
+3ba3afb1d1b261383d247f46cb135ee8 iana-etc-2.30.tar.bz2
+b6390b3abc02ef4986644fb7051b4568 linux-4.9.22.tar.xz
+d6a1d5f8ddea3abd2cc3e98f58352d26 mpc-1.0.3.tar.gz
+b8a2f6b0e68bef46e53da2ac439e1cf4 mpfr-3.1.4.tar.bz2
+ac52ccaec6b06ab0f289d37e8436859b musl-1.1.16.tar.gz
+8bf719b313053a482b1e878b75dfc07e iana-etc-2.30-update-2.patch
