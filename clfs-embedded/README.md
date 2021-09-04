@@ -131,7 +131,6 @@ tar xf ../gmp-6.2.1.tar.xz
 mv -v gmp-6.2.1 gmp
 tar xf ../mpc-1.2.1.tar.gz
 mv -v mpc-1.2.1 mpc
-sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 mkdir -v build
 cd build
 ../configure \
@@ -226,3 +225,46 @@ echo export READELF=\""${CLFS_TARGET}-readelf\"" >> ~/.bashrc
 echo export STRIP=\""${CLFS_TARGET}-strip\"" >> ~/.bashrc
 source ~/.bashrc
 ```
+
+## Installing basic system software
+### Creating directories
+```
+mkdir -pv ${CLFS}/{bin,boot,dev,etc,home,lib/{firmware,modules}}
+mkdir -pv ${CLFS}/{mnt,opt,proc,sbin,srv,sys}
+mkdir -pv ${CLFS}/var/{cache,lib,local,lock,log,opt,run,spool}
+install -dv -m 0750 ${CLFS}/root
+install -dv -m 1777 ${CLFS}/{var/,}tmp
+mkdir -pv ${CLFS}/usr/{,local/}{bin,include,lib,sbin,share,src}
+```
+
+### Creating necessary files
+```
+ln -svf ../proc/mounts ${CLFS}/etc/mtab
+
+cat > ${CLFS}/etc/passwd << "EOF"
+root::0:0:root:/root:/bin/ash
+EOF
+
+cat > ${CLFS}/etc/group << "EOF"
+root:x:0:
+bin:x:1:
+sys:x:2:
+kmem:x:3:
+tty:x:4:
+tape:x:5:
+daemon:x:6:
+floppy:x:7:
+disk:x:8:
+lp:x:9:
+dialout:x:10:
+audio:x:11:
+video:x:12:
+utmp:x:13:
+usb:x:14:
+cdrom:x:15:
+EOF
+
+touch ${CLFS}/var/log/lastlog
+chmod -v 664 ${CLFS}/var/log/lastlog
+```
+
